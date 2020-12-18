@@ -1,0 +1,30 @@
+- name: Update Project folder from GitLab
+  hosts: all 
+  vars:
+    ansible_python_interpreter: "/usr/bin/env python3"
+    project_dir : "/home/ubuntu/haproxy-awx-demo"
+    new_config_file: "git_haproxy.cfg"
+    
+  tasks:
+    - name: Install git package
+      apt:
+        name: git
+
+    - name: Remove haproxy-awx-demo directory
+      file:
+        path: "{{ project_dir }}"
+        state: absent
+
+    - name: Create haproxy-awx-demo directory
+      file:
+        path: "{{ project_dir }}"
+        state: directory
+
+    - name: Get updated files from git repository 
+      git: 
+        repo: "https://github.com/cisel-dev/haproxy-awx-demo.git"
+        dest: "{{ project_dir }}"
+
+    - name: Directly test the new haproxy.cfg file
+      shell: /usr/sbin/haproxy -c -V -f "{{ project_dir }}/{{ new_config_file }}"
+      register: haproxyconf
