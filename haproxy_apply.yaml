@@ -1,0 +1,37 @@
+- name: Validate and apply Haproxy config
+  hosts: all 
+  gather_facts: yes
+  vars:
+    ansible_python_interpreter: "/usr/bin/env python3"
+    project_dir: "/home/ubuntu/haproxy-awx-demo"
+    haproxy_dir: "/etc/haproxy"
+    config_file: "haproxy.cfg"
+    new_config_file: "git_haproxy.cfg"
+    bkp_file: "old_haproxy.cfg"
+
+  tasks:
+    - name: Test the new haproxy config file
+      shell: /usr/sbin/haproxy -c -V -f "{{ project_dir }}/{{ new_config_file }}"
+      register: haproxyconf
+      
+    - name: Copy the actual config file to old_haproxy.cfg
+      copy:
+        src: "{{ haproxy_dir }}/{{ config_file }}"
+        dest: "{{ haproxy_dir }}/{{ bkp_file }}"
+        remote_src: yes
+        
+    - name: Replace the actual config with the new one if validated
+      copy:
+        src: "{{ project_dir }}/{{ new_config_file }}"
+        dest: "{{ haproxy_dir }}/{{ config_file }}"
+        remote_src: yes
+      when: "'Configuration file is valid' in haproxyconf.stdout"
+
+    - name: Restart HAproxy service
+      systemd:
+        name: haproxy
+        state: restarted
+        
+    - name: Display facts
+      debug:
+        msg: "{{ haproxyconf.stdout }}"
