@@ -1,0 +1,35 @@
+# !! WARNING !!
+# There is no existing to validate a keepalived configuration file
+
+- name: Apply Keepalived config
+  hosts: all 
+  gather_facts: yes
+  vars:
+    project_dir: "/home/ubuntu/haproxy-awx-demo"
+    keepalived_dir: "/etc/keepalived"
+    config_file: "keepalived.conf"
+    new_config_file: "keepalived.conf"
+    bkp_file: "old_keepalived.conf"
+
+  tasks:
+
+    - name: Copy the actual config to old_keepalived.conf
+      copy:
+        src: "{{ keepalived_dir }}/{{ config_file }}"
+        dest: "{{ keepalived_dir }}/{{ bkp_file }}"
+        remote_src: yes
+        
+    - name: Replace the actual keepalived.conf with the new one
+      copy:
+        src: "{{ project_dir }}/{{ new_config_file }}"
+        dest: "{{ keepalived_dir }}/{{ config_file }}"
+        remote_src: yes
+        
+    - name: Modification of the priority according to the host, if "02" in the hostname the is set to 100
+      shell:   sed -i 's/priority 101/priority 100/g' "{{ keepalived_dir }}/{{ config_file }}"
+      when: "'02' in inventory_hostname"
+      
+    - name: Restart keepalived service
+      systemd:
+        name: keepalived
+        state: restarted
