@@ -34,5 +34,5 @@ Reach us at one of the following places!
 ---
 
 ## License
-- We used examples from  <a href="https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46" target="_blank">fvcproductions</a> pour créer ce template.
+- We used readme.md examples from  <a href="https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46" target="_blank">fvcproductions</a> pour créer ce template.
 - Copyright 2020 © <a href="https://www.cisel.ch" target="_blank">CISEL</a>.
