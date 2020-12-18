@@ -73,6 +73,7 @@ This setup works with 2 HAproxy in failover mode but it can be adapted to be use
 
 Feel free to contact us directly if you have any question at cloud@cisel.ch
 [https://www.cisel.ch](Link) 
+
 ## Team
 
 | <a href="https://www.cisel.ch" target="_blank">**CISEL**</a> | <a href="https://www.cisel.ch" target="_blank">**CISEL**</a> | <a href="https://www.cisel.ch" target="_blank">**CISEL**</a> |
