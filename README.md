@@ -1,4 +1,4 @@
-<a href="https://www.cisel.ch/"><img src="https://www.cisel.ch/wp-content/uploads/2019/05/cisel_80.png" title="CISEL" alt="CISEL"></a>
+<a href="https://www.cisel.ch/"><img src="https://www.cisel.ch/wp-content/uploads/2021/10/7-1.png" title="CISEL" alt="CISEL"></a>
 
 <!-- [![CISEL](https://www.cisel.ch/)](https://www.cisel.ch/) -->
 
